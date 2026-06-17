@@ -1,126 +1,114 @@
-# AI-Powered Code Review Assistant
+# AI Code Review Assistant
 
-A modern, production-oriented full-stack web application that allows developers to upload codebase archives (ZIP), explore the code folder hierarchy in an editor preview, request detailed code audits (using templates for security, performance, and general code quality), chat in real-time with their codebase using a simple context retrieval RAG system, and scan for design smells and high-level project architecture.
+A clean, full-stack application for uploading source code archives, browsing file trees, running custom review scans (security, performance, quality), and chatting with your codebase. 
 
-The system natively supports configurable AI provider profiles so developers can connect to hosted services (OpenAI, OpenRouter) or local endpoints (LM Studio, Ollama) on the fly without hardcoding credentials.
-
----
-
-## Features
-
-- **User Authentication**: Secure registration, login, and token-scoped routes using JSON Web Tokens (JWT) and bcrypt password hashing.
-- **AI Settings Configuration**: Create, list, edit, and delete AI Provider profiles. Real-time connection testing button directly verifies credentials and model names before saving.
-- **Project Workspaces**: Create, read, and delete code workspaces.
-- **ZIP Extract & File Tree Explorer**: In-memory ZIP file upload parsing (`adm-zip`), filtering of binaries, and dynamic conversion of flat file paths into a nested interactive directory explorer tree.
-- **Code Viewer & Highlighting**: View source file contents directly in the workspace, complete with line numbers and language-aware syntax highlighting (`PrismJS`).
-- **Structured Review Engine**: Trigger Security audits, Performance scans, and Code Quality reviews. Leverages OpenAI's JSON mode or formatted system prompts to return parseable, structured audit results categorizing issues into Critical, High, Medium, and Low severity.
-- **RAG Code Chat**: Chat sessions scoped to specific projects, allowing developers to query their source files. Assembles context dynamically, utilizing token budget checks to prevent context window blowout.
-- **Bonus Feature - Technical Debt Scanner**: Audit codebase design smells, grouping debt priority items into High, Medium, and Low levels.
-- **Bonus Feature - Architecture Analysis**: Generates high-level project boundary summaries, design pattern maps, and modular recommendations.
-- **History Logs**: Global audit review logs with query searches, filters, and slide-out details panels.
+Designed to support hosted APIs (OpenAI, OpenRouter) and local models (LM Studio, Ollama) without hardcoded configurations.
 
 ---
 
-## Project Structure
+## What's inside
 
-```
-ai-code-review-assistant/
-├── backend/                  # NestJS TypeScript API service
-│   ├── prisma/               # Prisma schema and migrations
-│   ├── src/                  # NestJS Modules, Services, Controllers
-│   ├── tsconfig.json
-│   └── package.json
-├── frontend/                 # Next.js App Router UI
-│   ├── src/                  # App components, pages, contexts
-│   ├── tsconfig.json
-│   └── package.json
-└── docker-compose.yml        # PostgreSQL container services
-```
+- **Authentication**: JWT-based user register/login/logout with client-side guards and secure backend middleware.
+- **Dynamic AI Configurations**: Add, test, and switch between multiple LLM endpoints via the settings dashboard.
+- **Code Explorer**: In-memory ZIP extractor (`adm-zip`), binary file filtering, and a nested folder tree browser with PrismJS syntax highlighting.
+- **Review Templates**: Configured audits targeting Security, Performance, and Clean Code Quality.
+- **Interactive Chat**: Project-scoped RAG assistant with token budget truncation to prevent context window blowout.
+- **Bonus Analytics**: Included modules for high-level Technical Debt scans and Project Architecture breakdown.
+- **Review History**: Filterable list of previous reviews with slide-out details panels.
+
+---
+
+## Tech Stack
+
+- **Frontend**: Next.js 15 (App Router), TypeScript, Tailwind CSS
+- **Backend**: NestJS, Prisma ORM
+- **Database**: PostgreSQL (Prisma adapter configured for SQLite fallback)
 
 ---
 
 ## Architecture Overview
 
-The system is designed with a decoupled Client-Server architecture:
-*   **Frontend (Next.js)**: Runs an interactive 3-pane dashboard workspace containing dynamic file explorer navigation, syntax highlighting text readers, and configurable AI settings controls.
-*   **Backend (NestJS)**: Serves endpoints for user authentication, file uploads, in-memory archive extraction, dynamic provider routers, structured prompt engineering, and codebase context retrieval (RAG).
-*   **Database (Prisma & PostgreSQL/SQLite)**: Stores schema configurations for projects, repository files content, user credentials, chat message logs, and code review histories.
-
-For a deeper dive, check [ARCHITECTURE.md](ARCHITECTURE.md).
+```mermaid
+graph TD
+    User([User Browser]) <--> |HTTP / JSON| NextJS[Next.js Frontend Client]
+    
+    subgraph Frontend [Next.js App]
+        NextJS --> AuthC[Auth Context]
+        NextJS --> Workspace[3-Pane Workspace]
+        Workspace --> FileTree[Recursive Tree Explorer]
+        Workspace --> CodeView[Syntax Highlighting Viewer]
+        Workspace --> ControlDesk[AI Control Panel]
+    end
+    
+    NextJS <--> |REST API & JWT| NestJS[NestJS Backend API]
+    
+    subgraph Backend [NestJS Server]
+        NestJS --> AuthM[Auth Module]
+        NestJS --> ProjectsM[Projects CRUD Module]
+        NestJS --> FilesM[In-Memory ZIP Parser]
+        NestJS --> ReviewsM[Audit Prompts Generator]
+        NestJS --> AIM[Dynamic LLM Client]
+    end
+    
+    AuthM & ProjectsM & FilesM & ReviewsM & AIM <--> |Prisma ORM| DB[(PostgreSQL / SQLite)]
+    
+    AIM <--> |OpenAI-Compatible REST| ExternalLLM[AI Provider API <br/> Groq / LM Studio / Ollama]
+```
 
 ---
 
-## Environment Variables
+## Setup & Running Locally
 
-### Backend (`backend/.env`)
-Create a `.env` file inside the `backend/` directory:
+### 1. Database Setup
+
+We provide a Docker Compose file for a local Postgres instance:
+
+```bash
+# Start the Postgres container
+docker compose up -d
+
+# Initialize database schema and generate Prisma client
+cd backend
+npx prisma db push
+npx prisma generate
+```
+
+*Note on SQLite fallback:* If you don't want to run Docker/Postgres, change the provider in `backend/prisma/schema.prisma` to `"sqlite"` and `DATABASE_URL` in `backend/.env` to `"file:./dev.db"`, then run `npx prisma db push`.
+
+### 2. Configure Environments
+
+**Backend (`backend/.env`):**
 ```env
 PORT=3001
 DATABASE_URL="postgresql://postgres:postgrespassword@localhost:5432/ai_code_reviewer?schema=public"
-JWT_SECRET="ai_code_reviewer_secret_key_12345"
+JWT_SECRET="temp_secret_key_for_dev"
 JWT_EXPIRES_IN="7d"
 ```
 
-### Frontend (`frontend/.env.local`)
-Create a `.env.local` file inside the `frontend/` directory (Optional; defaults to port 3001):
+**Frontend (`frontend/.env.local`):**
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
 
----
+### 3. Launch Services
 
-## Database Setup
-
-We provide a Docker Compose configuration to start a PostgreSQL database container:
-
-1. Make sure you have Docker running.
-2. In the root of the workspace, spin up the container in the background:
-   ```bash
-   docker compose up -d
-   ```
-3. Initialize the database schema and compile the Prisma client:
-   ```bash
-   cd backend
-   npx prisma db push
-   npx prisma generate
-   ```
-
-*(Local fallback option)*: If you do not have PostgreSQL running, you can easily change the database source to SQLite for local development:
-1. Edit `backend/prisma/schema.prisma` and change the `provider` in `datasource db` to `"sqlite"`:
-   ```prisma
-   datasource db {
-     provider = "sqlite"
-     url      = "file:./dev.db"
-   }
-   ```
-2. Edit `backend/.env` and adjust the connection URL:
-   ```env
-   DATABASE_URL="file:./dev.db"
-   ```
-3. Re-run `npx prisma db push`.
-
----
-
-## Running the Application
-
-### 1. Launch the Backend
+**Run the Backend API:**
 ```bash
 cd backend
 npm run start:dev
 ```
-The NestJS backend will listen on: `http://localhost:3001`
+Runs at `http://localhost:3001`.
 
-### 2. Launch the Frontend
+**Run the Frontend Client:**
 ```bash
 cd frontend
 npm run dev
 ```
-The Next.js client UI will start on: `http://localhost:3000`
+Runs at `http://localhost:3000`.
 
 ---
 
-## Testing & Verification
-
-We have verified that both applications compile and type-check:
-- **Backend Build Validation**: `npm run build` inside `backend/` compiles NestJS files with TypeScript strict options.
-- **Frontend Build Validation**: `npm run build` inside `frontend/` builds static routes and verifies all TypeScript imports, components, and contexts.
+## Verifications
+Both projects contain clean TypeScript declarations and pass strict production compilations:
+- Backend check: `npm run build` from `backend/`
+- Frontend check: `npm run build` from `frontend/`
