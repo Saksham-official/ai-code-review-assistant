@@ -108,7 +108,7 @@ export default function ReviewHistoryPage() {
       case 'performance':
         return 'text-amber-400 bg-amber-500/10 border-amber-500/20';
       case 'quality':
-        return 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20';
+        return 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20';
       case 'tech_debt':
         return 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20';
       case 'architecture':
@@ -135,7 +135,7 @@ export default function ReviewHistoryPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#090d16]">
+    <div className="flex min-h-screen bg-black">
       <Sidebar />
 
       <main className="flex-1 flex flex-col p-8 overflow-y-auto max-h-screen">
@@ -170,7 +170,7 @@ export default function ReviewHistoryPage() {
             <select
               value={selectedTemplate}
               onChange={(e) => setSelectedTemplate(e.target.value)}
-              className="bg-[#0b0f19] border border-white/5 text-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 cursor-pointer"
+              className="bg-black border border-white/5 text-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-emerald-500 cursor-pointer"
             >
               <option value="">All Templates</option>
               <option value="security">Security</option>
@@ -185,11 +185,11 @@ export default function ReviewHistoryPage() {
         {/* History Table */}
         {loading ? (
           <div className="flex-grow flex justify-center items-center py-24">
-            <div className="h-8 w-8 border-2 border-white/20 border-t-indigo-500 rounded-full animate-spin" />
+            <div className="h-8 w-8 border-2 border-white/20 border-t-emerald-500 rounded-full animate-spin" />
           </div>
         ) : reviews.length === 0 ? (
-          <div className="flex-grow flex flex-col justify-center items-center border border-dashed border-white/5 rounded-3xl p-12 text-center bg-[#0d1321]/20 animate-fade-in">
-            <div className="p-4 rounded-2xl bg-indigo-500/5 border border-indigo-500/10 text-indigo-400/70 mb-4 animate-pulse">
+          <div className="flex-grow flex flex-col justify-center items-center border border-dashed border-white/5 rounded-3xl p-12 text-center bg-neutral-950/20 animate-fade-in">
+            <div className="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 text-emerald-400/70 mb-4 animate-pulse">
               <History className="h-8 w-8" />
             </div>
             <h3 className="text-lg font-semibold text-white">No reviews found</h3>
@@ -202,7 +202,7 @@ export default function ReviewHistoryPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-white/5 bg-[#0d1321]/40 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+                  <tr className="border-b border-white/5 bg-neutral-950/40 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
                     <th className="p-4">Project</th>
                     <th className="p-4">Template</th>
                     <th className="p-4">Audit Summary</th>
@@ -218,7 +218,7 @@ export default function ReviewHistoryPage() {
                       onClick={() => fetchReviewDetail(rev.id)}
                       className="hover:bg-white/5 transition-colors cursor-pointer group"
                     >
-                      <td className="p-4 font-bold text-white group-hover:text-indigo-400 transition-colors">
+                      <td className="p-4 font-bold text-white group-hover:text-emerald-400 transition-colors">
                         {rev.project.name}
                       </td>
                       <td className="p-4">
@@ -237,7 +237,7 @@ export default function ReviewHistoryPage() {
                         <span>{formatDate(rev.createdAt)}</span>
                       </td>
                       <td className="p-4 text-right">
-                        <ChevronRight className="h-4 w-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all inline-block" />
+                        <ChevronRight className="h-4 w-4 text-gray-600 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all inline-block" />
                       </td>
                     </tr>
                   ))}
@@ -254,9 +254,9 @@ export default function ReviewHistoryPage() {
             <div className="absolute inset-0 z-0" onClick={() => { setActiveReviewId(null); setActiveReviewDetail(null); }} />
 
             {/* Slide drawer body */}
-            <div className="w-full max-w-2xl bg-[#0a0f1d] border-l border-white/5 h-full flex flex-col z-10 animate-fade-in relative shadow-2xl">
+            <div className="w-full max-w-2xl bg-neutral-950 border-l border-white/5 h-full flex flex-col z-10 animate-fade-in relative shadow-2xl">
               {/* Top Bar */}
-              <div className="p-6 border-b border-white/5 flex justify-between items-center bg-[#0d1321]/40">
+              <div className="p-6 border-b border-white/5 flex justify-between items-center bg-neutral-900/40">
                 <div>
                   <div className="flex items-center space-x-2">
                     <h2 className="text-base font-bold text-white">{activeReviewDetail.project.name}</h2>
@@ -294,9 +294,9 @@ export default function ReviewHistoryPage() {
 
                 {/* Summary */}
                 <div className="glass-panel p-5 rounded-2xl relative">
-                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent" />
+                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
                   <p className="text-[9px] text-gray-500 uppercase tracking-wider mb-2 font-bold flex items-center space-x-1.5">
-                    <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
+                    <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
                     <span>Audit Executive Summary</span>
                   </p>
                   <p className="text-xs text-gray-300 leading-relaxed font-medium">{activeReviewDetail.summary}</p>
@@ -308,7 +308,7 @@ export default function ReviewHistoryPage() {
                   <div className="p-3 bg-white/[0.01] border border-white/5 rounded-xl max-h-[80px] overflow-y-auto">
                     <div className="flex flex-wrap gap-1.5">
                       {activeReviewDetail.targetFiles.map((f, idx) => (
-                        <span key={idx} className="px-2 py-1 bg-[#090d16] border border-white/5 text-[9px] font-mono text-gray-400 rounded">
+                        <span key={idx} className="px-2 py-1 bg-black border border-white/5 text-[9px] font-mono text-gray-400 rounded">
                           {f}
                         </span>
                       ))}
@@ -359,7 +359,7 @@ export default function ReviewHistoryPage() {
                           </button>
 
                           {isExpanded && (
-                            <div className="px-4 pb-4 pt-1 border-t border-white/5 bg-[#090d16]/30 space-y-3 animate-fade-in">
+                            <div className="px-4 pb-4 pt-1 border-t border-white/5 bg-black/30 space-y-3 animate-fade-in">
                               <div>
                                 <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider">Description</span>
                                 <p className="text-xs text-gray-300 mt-0.5 leading-relaxed">{issue.description}</p>
@@ -367,8 +367,8 @@ export default function ReviewHistoryPage() {
 
                               {issue.recommendation && (
                                 <div>
-                                  <span className="text-[8px] font-bold text-indigo-400 uppercase tracking-wider">Recommendation Fix</span>
-                                  <pre className="text-[10px] font-mono text-gray-300 bg-[#090d16] p-3 rounded-lg border border-white/5 overflow-x-auto mt-1 leading-relaxed">
+                                  <span className="text-[8px] font-bold text-emerald-400 uppercase tracking-wider">Recommendation Fix</span>
+                                  <pre className="text-[10px] font-mono text-gray-300 bg-black p-3 rounded-lg border border-white/5 overflow-x-auto mt-1 leading-relaxed">
                                     <code>{issue.recommendation}</code>
                                   </pre>
                                 </div>

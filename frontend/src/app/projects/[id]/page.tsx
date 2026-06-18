@@ -378,7 +378,7 @@ export default function ProjectWorkspace() {
                   className="w-full flex items-center space-x-2 py-1.5 hover:bg-white/5 rounded-lg text-xs font-semibold text-gray-300 hover:text-white text-left transition-colors cursor-pointer"
                 >
                   {isExpanded ? <ChevronDown className="h-3.5 w-3.5 text-gray-500" /> : <ChevronRight className="h-3.5 w-3.5 text-gray-500" />}
-                  <Folder className="h-4 w-4 text-indigo-400/80" />
+                  <Folder className="h-4 w-4 text-emerald-400/80" />
                   <span className="truncate">{node.name}</span>
                 </button>
                 
@@ -397,7 +397,7 @@ export default function ProjectWorkspace() {
                 style={{ paddingLeft: `${depth * 12 + 24}px` }}
                 className={`w-full flex items-center space-x-2 py-1.5 rounded-lg text-xs transition-all text-left cursor-pointer ${
                   isSelected 
-                    ? 'bg-indigo-600/15 border-l-2 border-indigo-500 text-indigo-400 font-semibold shadow shadow-indigo-500/5' 
+                    ? 'bg-emerald-600/15 border-l-2 border-emerald-500 text-emerald-400 font-semibold shadow shadow-emerald-500/5' 
                     : 'text-gray-400 hover:text-gray-200 hover:bg-white/5 border-l-2 border-transparent'
                 }`}
               >
@@ -441,12 +441,12 @@ export default function ProjectWorkspace() {
   };
 
   return (
-    <div className="flex h-screen bg-[#090d16] text-[#f3f4f6]">
+    <div className="flex h-screen bg-black text-[#f3f4f6]">
       <Sidebar />
 
       <div className="flex-1 flex flex-col h-full overflow-hidden">
         {/* Workspace Subheader */}
-        <div className="h-16 px-6 border-b border-white/5 flex items-center justify-between bg-[#0a0f1d]/50 flex-shrink-0 animate-fade-in">
+        <div className="h-16 px-6 border-b border-white/5 flex items-center justify-between bg-neutral-950/50 flex-shrink-0 animate-fade-in">
           <div className="flex items-center space-x-4">
             <Link href="/dashboard" className="p-2 rounded-lg hover:bg-white/5 text-gray-400 hover:text-white transition-colors">
               <ArrowLeft className="h-4 w-4" />
@@ -468,7 +468,7 @@ export default function ProjectWorkspace() {
               <select
                 value={selectedProviderId}
                 onChange={(e) => setSelectedProviderId(e.target.value)}
-                className="bg-[#0b0f19] border border-white/5 text-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-500 cursor-pointer"
+                className="bg-black border border-white/5 text-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-emerald-500 cursor-pointer"
               >
                 {providers.length === 0 ? (
                   <option value="">No Providers Found</option>
@@ -507,7 +507,7 @@ export default function ProjectWorkspace() {
         <div className="flex-grow flex w-full overflow-hidden">
           
           {/* Pane 1: File Tree (Width: 64) */}
-          <div className="w-64 border-r border-white/5 bg-[#0a0f1d]/30 flex flex-col h-full flex-shrink-0 overflow-y-auto p-4 select-none">
+          <div className="w-64 border-r border-white/5 bg-neutral-950/30 flex flex-col h-full flex-shrink-0 overflow-y-auto p-4 select-none">
             <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mb-3">Workspace Files</p>
             
             {fileTree.length === 0 ? (
@@ -528,7 +528,7 @@ export default function ProjectWorkspace() {
                 }}
                 className={`flex-1 flex flex-col items-center justify-center p-4 border border-dashed rounded-2xl text-center transition-all ${
                   isDragging 
-                    ? 'border-indigo-500 bg-indigo-500/10 scale-98 shadow shadow-indigo-500/20' 
+                    ? 'border-emerald-500 bg-emerald-500/10 scale-98 shadow shadow-emerald-500/20' 
                     : 'border-white/5 bg-white/[0.01]'
                 }`}
               >
@@ -548,7 +548,7 @@ export default function ProjectWorkspace() {
                   />
                   <label
                     htmlFor="zip-upload-input"
-                    className="block w-full py-2 px-3 border border-white/10 hover:border-white/20 rounded-xl bg-[#090d16] text-[10px] font-semibold text-gray-400 hover:text-white cursor-pointer transition-colors"
+                    className="block w-full py-2 px-3 border border-white/10 hover:border-white/20 rounded-xl bg-black text-[10px] font-semibold text-gray-400 hover:text-white cursor-pointer transition-colors"
                   >
                     {uploadFile ? uploadFile.name : 'Select ZIP File'}
                   </label>
@@ -557,12 +557,12 @@ export default function ProjectWorkspace() {
                     <button
                       type="submit"
                       disabled={uploading}
-                      className="w-full flex items-center justify-center py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-bold transition-all shadow-md shadow-indigo-500/10 cursor-pointer"
+                      className="w-full flex items-center justify-center py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold transition-all shadow-md shadow-emerald-500/10 cursor-pointer"
                     >
                       {uploading ? 'Processing...' : 'Upload'}
                     </button>
                   )}
-                  {uploadProgress && <p className="text-[9px] text-indigo-400 animate-pulse mt-1">{uploadProgress}</p>}
+                  {uploadProgress && <p className="text-[9px] text-emerald-400 animate-pulse mt-1">{uploadProgress}</p>}
                 </form>
               </div>
             ) : (
@@ -588,12 +588,12 @@ export default function ProjectWorkspace() {
                   </label>
 
                   {uploadFile && (
-                    <div className="mt-3 bg-[#0d1321]/60 p-3 border border-white/5 rounded-xl animate-fade-in">
+                    <div className="mt-3 bg-neutral-900/60 p-3 border border-white/5 rounded-xl animate-fade-in">
                       <p className="text-[9px] text-gray-400 truncate mb-2">{uploadFile.name}</p>
                       <button
                         onClick={handleFileUpload}
                         disabled={uploading}
-                        className="w-full py-1.5 px-2 bg-indigo-600 text-white rounded-lg text-[9px] font-bold cursor-pointer"
+                        className="w-full py-1.5 px-2 bg-emerald-600 text-white rounded-lg text-[9px] font-bold cursor-pointer"
                       >
                         {uploading ? 'Processing...' : 'Confirm'}
                       </button>
@@ -605,22 +605,22 @@ export default function ProjectWorkspace() {
           </div>
 
           {/* Pane 2: File Viewer (Flexible Width) */}
-          <div className="flex-1 border-r border-white/5 bg-[#090d16] flex flex-col h-full overflow-hidden">
+          <div className="flex-1 border-r border-white/5 bg-black flex flex-col h-full overflow-hidden">
             {fileLoading ? (
               <div className="flex-grow flex items-center justify-center">
-                <div className="h-8 w-8 border-2 border-white/20 border-t-indigo-500 rounded-full animate-spin" />
+                <div className="h-8 w-8 border-2 border-white/20 border-t-emerald-500 rounded-full animate-spin" />
               </div>
             ) : activeFileId ? (
               <div className="flex-grow flex flex-col h-full overflow-hidden animate-fade-in">
                 {/* Path bar */}
-                <div className="h-9 px-4 border-b border-white/5 bg-[#0a0f1d]/30 flex items-center justify-between flex-shrink-0">
+                <div className="h-9 px-4 border-b border-white/5 bg-neutral-950/30 flex items-center justify-between flex-shrink-0">
                   <div className="flex items-center space-x-2 text-xs text-gray-400 font-mono">
                     <FileCode className="h-3.5 w-3.5 text-gray-500" />
                     <span>{activeFilePath}</span>
                   </div>
                 </div>
                 {/* Code body */}
-                <pre className="flex-1 overflow-auto p-4 m-0 text-xs font-mono select-text bg-[#090d16] leading-relaxed">
+                <pre className="flex-1 overflow-auto p-4 m-0 text-xs font-mono select-text bg-black leading-relaxed">
                   <code className={getLanguageClass(activeFilePath)}>
                     {activeFileContent}
                   </code>
@@ -629,7 +629,7 @@ export default function ProjectWorkspace() {
             ) : (
               /* Explorer empty state logo */
               <div className="flex-grow flex flex-col justify-center items-center text-center p-8 select-none">
-                <div className="p-4 rounded-3xl bg-indigo-500/5 border border-indigo-500/10 text-indigo-400/50 mb-4 animate-pulse">
+                <div className="p-4 rounded-3xl bg-emerald-500/5 border border-emerald-500/10 text-emerald-400/50 mb-4 animate-pulse">
                   <FileCode className="h-10 w-10" />
                 </div>
                 <h3 className="text-sm font-semibold text-gray-300">No File Selected</h3>
@@ -641,14 +641,14 @@ export default function ProjectWorkspace() {
           </div>
 
           {/* Pane 3: Right Action panel (Width: 80 / ~384px) */}
-          <div className="w-[420px] bg-[#0a0f1d]/40 flex flex-col h-full flex-shrink-0 overflow-hidden">
+          <div className="w-[420px] bg-neutral-950/40 flex flex-col h-full flex-shrink-0 overflow-hidden">
             {/* Action Tabs Header */}
-            <div className="h-12 border-b border-white/5 bg-[#0d1321]/40 flex flex-shrink-0">
+            <div className="h-12 border-b border-white/5 bg-neutral-900/40 flex flex-shrink-0">
               <button
                 onClick={() => setActiveTab('review')}
                 className={`flex-1 flex items-center justify-center space-x-1.5 text-xs font-bold border-b-2 transition-all cursor-pointer ${
                   activeTab === 'review'
-                    ? 'border-indigo-500 text-indigo-400 bg-indigo-500/5'
+                    ? 'border-emerald-500 text-emerald-400 bg-emerald-500/5'
                     : 'border-transparent text-gray-400 hover:text-gray-200'
                 }`}
               >
@@ -660,7 +660,7 @@ export default function ProjectWorkspace() {
                 onClick={() => setActiveTab('chat')}
                 className={`flex-1 flex items-center justify-center space-x-1.5 text-xs font-bold border-b-2 transition-all cursor-pointer ${
                   activeTab === 'chat'
-                    ? 'border-indigo-500 text-indigo-400 bg-indigo-500/5'
+                    ? 'border-emerald-500 text-emerald-400 bg-emerald-500/5'
                     : 'border-transparent text-gray-400 hover:text-gray-200'
                 }`}
               >
@@ -672,7 +672,7 @@ export default function ProjectWorkspace() {
                 onClick={() => setActiveTab('tools')}
                 className={`flex-1 flex items-center justify-center space-x-1.5 text-xs font-bold border-b-2 transition-all cursor-pointer ${
                   activeTab === 'tools'
-                    ? 'border-indigo-500 text-indigo-400 bg-indigo-500/5'
+                    ? 'border-emerald-500 text-emerald-400 bg-emerald-500/5'
                     : 'border-transparent text-gray-400 hover:text-gray-200'
                 }`}
               >
@@ -696,7 +696,7 @@ export default function ProjectWorkspace() {
                       <select
                         value={reviewTemplate}
                         onChange={(e) => setReviewTemplate(e.target.value)}
-                        className="bg-[#090d16] border border-white/5 text-gray-300 rounded-lg px-2.5 py-1 text-xs focus:outline-none cursor-pointer"
+                        className="bg-black border border-white/5 text-gray-300 rounded-lg px-2.5 py-1 text-xs focus:outline-none cursor-pointer"
                       >
                         <option value="security">Security Review</option>
                         <option value="performance">Performance Review</option>
@@ -712,8 +712,8 @@ export default function ProjectWorkspace() {
                           onClick={() => setReviewScope('project')}
                           className={`py-1.5 text-center rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
                             reviewScope === 'project'
-                              ? 'bg-indigo-600/15 border-indigo-500/35 text-indigo-400'
-                              : 'bg-[#090d16] border-white/5 text-gray-400 hover:text-white'
+                              ? 'bg-emerald-600/15 border-emerald-500/35 text-emerald-400'
+                              : 'bg-black border-white/5 text-gray-400 hover:text-white'
                           }`}
                         >
                           Entire Project
@@ -730,15 +730,15 @@ export default function ProjectWorkspace() {
                           }}
                           className={`py-1.5 text-center rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
                             reviewScope === 'file'
-                              ? 'bg-indigo-600/15 border-indigo-500/35 text-indigo-400'
-                              : 'bg-[#090d16] border-white/5 text-gray-400 hover:text-white'
+                              ? 'bg-emerald-600/15 border-emerald-500/35 text-emerald-400'
+                              : 'bg-black border-white/5 text-gray-400 hover:text-white'
                           }`}
                         >
                           Active File
                         </button>
                       </div>
                       {reviewScope === 'file' && activeFilePath && (
-                        <p className="text-[9px] text-indigo-400 truncate mt-1">
+                        <p className="text-[9px] text-emerald-400 truncate mt-1">
                           Target: {activeFilePath}
                         </p>
                       )}
@@ -747,7 +747,7 @@ export default function ProjectWorkspace() {
                     <button
                       onClick={triggerCodeReview}
                       disabled={reviewLoading || fileTree.length === 0 || (reviewScope === 'file' && !activeFileId)}
-                      className="w-full flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition-colors shadow shadow-indigo-500/10 cursor-pointer disabled:opacity-50"
+                      className="w-full flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors shadow shadow-emerald-500/10 cursor-pointer disabled:opacity-50"
                     >
                       {reviewLoading ? (
                         <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -763,7 +763,7 @@ export default function ProjectWorkspace() {
                   {/* Review output details */}
                   {reviewLoading ? (
                     <div className="flex-grow flex flex-col justify-center items-center text-center p-8">
-                      <div className="h-6 w-6 border-2 border-white/20 border-t-indigo-500 rounded-full animate-spin mb-4" />
+                      <div className="h-6 w-6 border-2 border-white/20 border-t-emerald-500 rounded-full animate-spin mb-4" />
                       <p className="text-xs font-semibold text-gray-300">Auditing source files...</p>
                       <p className="text-[10px] text-gray-500 max-w-[200px] mt-1">This might take up to a minute depending on codebase size.</p>
                     </div>
@@ -833,7 +833,7 @@ export default function ProjectWorkspace() {
                                 </button>
 
                                 {isExpanded && (
-                                  <div className="px-4 pb-4 pt-1 border-t border-white/5 bg-[#090d16]/30 space-y-3 animate-fade-in">
+                                  <div className="px-4 pb-4 pt-1 border-t border-white/5 bg-black/30 space-y-3 animate-fade-in">
                                     <div>
                                       <span className="text-[8px] font-bold text-gray-500 uppercase tracking-wider">Description</span>
                                       <p className="text-xs text-gray-300 mt-0.5 leading-relaxed">{issue.description}</p>
@@ -841,8 +841,8 @@ export default function ProjectWorkspace() {
 
                                     {issue.recommendation && (
                                       <div>
-                                        <span className="text-[8px] font-bold text-indigo-400 uppercase tracking-wider">Recommendation</span>
-                                        <pre className="text-[10px] font-mono text-gray-300 bg-[#090d16] p-3 rounded-lg border border-white/5 overflow-x-auto mt-1 leading-relaxed">
+                                        <span className="text-[8px] font-bold text-emerald-400 uppercase tracking-wider">Recommendation</span>
+                                        <pre className="text-[10px] font-mono text-gray-300 bg-black p-3 rounded-lg border border-white/5 overflow-x-auto mt-1 leading-relaxed">
                                           <code>{issue.recommendation}</code>
                                         </pre>
                                       </div>
@@ -857,7 +857,7 @@ export default function ProjectWorkspace() {
                     </div>
                   ) : (
                     <div className="flex-1 flex flex-col justify-center items-center text-center p-8 select-none">
-                      <div className="p-3 rounded-2xl bg-indigo-500/5 border border-indigo-500/10 text-indigo-400/50 mb-3 animate-pulse">
+                      <div className="p-3 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 text-emerald-400/50 mb-3 animate-pulse">
                         <Gauge className="h-8 w-8" />
                       </div>
                       <h3 className="text-xs font-semibold text-gray-300">No Review Completed</h3>
@@ -878,7 +878,7 @@ export default function ProjectWorkspace() {
                     <select
                       value={activeSessionId || ''}
                       onChange={(e) => loadChatMessages(e.target.value)}
-                      className="flex-1 bg-[#0b0f19] border border-white/5 text-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none cursor-pointer"
+                      className="flex-1 bg-black border border-white/5 text-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none cursor-pointer"
                     >
                       {chatSessions.length === 0 ? (
                         <option value="">No Active Chats</option>
@@ -899,11 +899,11 @@ export default function ProjectWorkspace() {
                         value={newSessionTitle}
                         onChange={(e) => setNewSessionTitle(e.target.value)}
                         placeholder="New Chat Title"
-                        className="w-28 px-2.5 py-1.5 rounded-lg border border-white/5 bg-[#090d16] text-xs focus:outline-none focus:border-indigo-500"
+                        className="w-28 px-2.5 py-1.5 rounded-lg border border-white/5 bg-black text-xs focus:outline-none focus:border-emerald-500"
                       />
                       <button
                         type="submit"
-                        className="p-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all shadow shadow-indigo-500/10 cursor-pointer"
+                        className="p-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all shadow shadow-emerald-500/10 cursor-pointer"
                         title="New Chat Session"
                       >
                         <Plus className="h-3.5 w-3.5" />
@@ -912,7 +912,7 @@ export default function ProjectWorkspace() {
                   </div>
 
                   {/* Messages history feed */}
-                  <div className="flex-grow overflow-y-auto border border-white/5 bg-[#090d16]/30 rounded-2xl p-4 space-y-4 max-h-[360px] min-h-[300px]">
+                  <div className="flex-grow overflow-y-auto border border-white/5 bg-black/30 rounded-2xl p-4 space-y-4 max-h-[360px] min-h-[300px]">
                     {chatSessions.length === 0 ? (
                       <div className="h-full flex flex-col items-center justify-center text-center text-xs text-gray-500">
                         Create a chat session using the button above to ask questions.
@@ -929,7 +929,7 @@ export default function ProjectWorkspace() {
                         >
                           <div className={`p-3 rounded-2xl max-w-[85%] text-xs leading-relaxed ${
                             msg.sender === 'user'
-                              ? 'bg-indigo-600 text-white rounded-tr-none shadow-md shadow-indigo-500/5'
+                              ? 'bg-emerald-600 text-white rounded-tr-none shadow-md shadow-emerald-500/5'
                               : 'bg-white/[0.03] border border-white/5 text-gray-300 rounded-tl-none font-medium'
                           }`}>
                             <p className="whitespace-pre-wrap">{msg.content}</p>
@@ -963,7 +963,7 @@ export default function ProjectWorkspace() {
                     <button
                       type="submit"
                       disabled={chatLoading || chatSessions.length === 0}
-                      className="p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all shadow shadow-indigo-500/10 cursor-pointer disabled:opacity-50"
+                      className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all shadow shadow-emerald-500/10 cursor-pointer disabled:opacity-50"
                     >
                       <Send className="h-4 w-4" />
                     </button>
@@ -1016,7 +1016,7 @@ export default function ProjectWorkspace() {
                         </div>
 
                         {/* List */}
-                        <div className="bg-[#090d16]/30 border border-white/5 p-3 rounded-xl max-h-[140px] overflow-y-auto space-y-2.5">
+                        <div className="bg-black/30 border border-white/5 p-3 rounded-xl max-h-[140px] overflow-y-auto space-y-2.5">
                           {debtScannerResult.issues.map((i, idx) => (
                             <div key={idx} className="text-[10px] leading-relaxed border-b border-white/5 pb-2 last:border-b-0 last:pb-0">
                               <div className="flex justify-between font-bold text-gray-300">
@@ -1060,7 +1060,7 @@ export default function ProjectWorkspace() {
                     {archAnalysisResult && (
                       <div className="pt-4 border-t border-white/5 space-y-2 animate-fade-in">
                         <p className="text-[9px] text-gray-500 uppercase tracking-wider font-bold">Conceptual Summary</p>
-                        <div className="p-3 bg-[#090d16]/30 border border-white/5 rounded-xl text-[10px] text-gray-400 leading-relaxed overflow-y-auto max-h-[160px] whitespace-pre-wrap">
+                        <div className="p-3 bg-black/30 border border-white/5 rounded-xl text-[10px] text-gray-400 leading-relaxed overflow-y-auto max-h-[160px] whitespace-pre-wrap">
                           {archAnalysisResult.summary}
                         </div>
                       </div>

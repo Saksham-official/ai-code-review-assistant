@@ -180,7 +180,7 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-[#090d16]">
+    <div className="flex min-h-screen bg-black">
       <Sidebar />
 
       <main className="flex-1 flex flex-col p-8 overflow-y-auto max-h-screen">
@@ -207,10 +207,10 @@ export default function SettingsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-fade-in">
           {/* Form Configurator */}
           <div className="lg:col-span-5 glass-panel p-6 rounded-2xl relative">
-            <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
             
             <h2 className="text-sm font-bold text-white mb-4 flex items-center space-x-2">
-              <Cpu className="h-4 w-4 text-indigo-400" />
+              <Cpu className="h-4 w-4 text-emerald-400" />
               <span>Configure Provider</span>
             </h2>
 
@@ -293,7 +293,7 @@ export default function SettingsPage() {
                   type="checkbox"
                   checked={isDefault}
                   onChange={(e) => setIsDefault(e.target.checked)}
-                  className="rounded border-white/10 text-indigo-600 focus:ring-0 cursor-pointer h-4 w-4 bg-[#090d16]"
+                  className="rounded border-white/10 text-emerald-600 focus:ring-0 cursor-pointer h-4 w-4 bg-black"
                 />
                 <label htmlFor="isDefault" className="text-xs text-gray-400 select-none cursor-pointer">
                   Set as Default Provider
@@ -334,7 +334,7 @@ export default function SettingsPage() {
                 <button
                   type="submit"
                   disabled={formLoading}
-                  className="flex-grow flex items-center justify-center space-x-1 px-3 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-colors cursor-pointer"
+                  className="flex-grow flex items-center justify-center space-x-1 px-3 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-colors cursor-pointer"
                 >
                   {formLoading ? (
                     <div className="h-3.5 w-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -355,7 +355,7 @@ export default function SettingsPage() {
 
             {loading ? (
               <div className="flex justify-center items-center py-12">
-                <div className="h-6 w-6 border-2 border-white/20 border-t-indigo-500 rounded-full animate-spin" />
+                <div className="h-6 w-6 border-2 border-white/20 border-t-emerald-500 rounded-full animate-spin" />
               </div>
             ) : providers.length === 0 ? (
               <div className="glass-panel p-8 rounded-2xl text-center text-xs text-gray-500">
@@ -369,7 +369,7 @@ export default function SettingsPage() {
                       <div className="flex items-center space-x-2">
                         <span className="text-sm font-bold text-white">{p.name}</span>
                         {p.isDefault && (
-                          <span className="px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+                          <span className="px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
                             Default
                           </span>
                         )}
@@ -410,7 +410,7 @@ export default function SettingsPage() {
                       {!p.isDefault && (
                         <button
                           onClick={() => handleSetDefault(p.id)}
-                          className="px-2.5 py-1.5 rounded-lg bg-indigo-600/10 border border-indigo-500/10 hover:bg-indigo-600 hover:text-white text-indigo-400 font-medium text-[10px] transition-all cursor-pointer"
+                          className="px-2.5 py-1.5 rounded-lg bg-emerald-600/10 border border-emerald-500/10 hover:bg-emerald-600 hover:text-white text-emerald-400 font-medium text-[10px] transition-all cursor-pointer"
                         >
                           Make Default
                         </button>

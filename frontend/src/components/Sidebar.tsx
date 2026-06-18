@@ -25,10 +25,10 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="w-64 bg-[#0d1321]/80 backdrop-blur-md border-r border-white/5 flex flex-col h-screen sticky top-0">
+    <div className="w-64 bg-neutral-950/80 backdrop-blur-md border-r border-white/5 flex flex-col h-screen sticky top-0">
       {/* Brand Header */}
       <div className="p-6 border-b border-white/5 flex items-center space-x-3">
-        <div className="p-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+        <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
           <Shield className="h-5 w-5" />
         </div>
         <div>
@@ -49,15 +49,15 @@ export default function Sidebar() {
               href={link.href}
               className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                 isActive
-                  ? 'bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 shadow-md shadow-indigo-500/5'
+                  ? 'bg-emerald-600/10 border border-emerald-500/20 text-emerald-400 shadow-md shadow-emerald-500/5'
                   : 'border border-transparent text-gray-400 hover:text-gray-200 hover:bg-white/5'
               }`}
             >
               <div className="flex items-center space-x-3">
-                <Icon className={`h-4 w-4 ${isActive ? 'text-indigo-400' : 'text-gray-400'}`} />
+                <Icon className={`h-4 w-4 ${isActive ? 'text-emerald-400' : 'text-gray-400'}`} />
                 <span>{link.name}</span>
               </div>
-              {isActive && <ChevronRight className="h-3 w-3 text-indigo-400 animate-pulse" />}
+              {isActive && <ChevronRight className="h-3 w-3 text-emerald-400 animate-pulse" />}
             </Link>
           );
         })}
@@ -67,7 +67,7 @@ export default function Sidebar() {
       <div className="p-4 border-t border-white/5 space-y-4">
         {user && (
           <div className="flex items-center space-x-3 px-2">
-            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-indigo-500 to-sky-500 flex items-center justify-center text-white font-bold text-sm border border-white/10 shadow-md">
+            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-emerald-500 to-sky-500 flex items-center justify-center text-white font-bold text-sm border border-white/10 shadow-md">
               {user.name ? user.name[0].toUpperCase() : user.email[0].toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
