@@ -5,9 +5,9 @@ import { Shield } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="flex-grow flex flex-col items-center justify-center min-h-screen bg-[#090d16] text-white">
+    <div className="flex-grow flex flex-col items-center justify-center min-h-screen bg-black text-white">
       <div className="flex flex-col items-center space-y-4 animate-pulse">
-        <div className="p-4 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+        <div className="p-4 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
           <Shield className="h-12 w-12 animate-spin-slow" />
         </div>
         <div className="text-center">

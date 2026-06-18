@@ -30,12 +30,12 @@ export default function LoginPage() {
   return (
     <div className="flex-1 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-12 relative overflow-hidden">
       {/* Decorative gradients */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] height-[350px] rounded-full bg-indigo-500/10 blur-[80px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] height-[350px] rounded-full bg-emerald-500/10 blur-[80px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[300px] height-[300px] rounded-full bg-sky-500/10 blur-[80px] pointer-events-none" />
 
       <div className="w-full max-w-md space-y-8 animate-fade-in relative z-10">
         <div className="text-center">
-          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 mb-4 shadow-lg shadow-indigo-500/5">
+          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-4 shadow-lg shadow-emerald-500/5">
             <Shield className="h-8 w-8" />
           </div>
           <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
@@ -48,7 +48,7 @@ export default function LoginPage() {
 
         <div className="glass-panel p-8 rounded-3xl relative overflow-hidden">
           {/* Subtle gradient border accent */}
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
 
           {error && (
             <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm flex items-start space-x-2 animate-fade-in">
@@ -104,7 +104,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-500 hover:to-sky-500 text-white font-medium text-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-lg shadow-indigo-500/20 hover-glow disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-sky-600 hover:from-emerald-500 hover:to-sky-500 text-white font-medium text-sm transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500/50 shadow-lg shadow-emerald-500/20 hover-glow disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {loading ? (
                 <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -120,7 +120,7 @@ export default function LoginPage() {
           <div className="mt-8 text-center border-t border-white/5 pt-6">
             <p className="text-xs text-gray-400">
               New to the platform?{' '}
-              <Link href="/register" className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors underline underline-offset-4">
+              <Link href="/register" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors underline underline-offset-4">
                 Create an Account
               </Link>
             </p>
