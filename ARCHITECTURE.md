@@ -1,53 +1,50 @@
-# Architecture Document - AI-Powered Code Review Assistant
+# System Architecture
 
-This document outlines the software architecture, database design, API structures, and AI integration flows implemented in the **AI-Powered Code Review Assistant**.
-
----
-
-## 1. Frontend Architecture
-
-The frontend is built on **Next.js 15 (App Router)** in **TypeScript**, styled with **Tailwind CSS**. It uses a single-page workspace layout split into three distinct modules to maximize screen space for reviewing code.
-
-### Core Architecture Components
-- **AuthProvider (`src/context/AuthContext.tsx`)**: Controls global session status. Automatically intercepts client-side routing, redirecting unauthenticated users to `/login` and authenticated users to `/dashboard`.
-- **API Wrapper (`src/lib/api.ts`)**: An asynchronous fetch interceptor. Reads the active JWT from `localStorage` and appends it to outgoing requests. Wraps server response errors in standard client exceptions.
-- **Three-Pane Workspace Component (`src/app/projects/[id]/page.tsx`)**:
-  - **Left Pane (File Tree)**: Directory browser that displays subdirectories. Uses custom path parsing logic to translate raw file path entries into folder tree nodes recursively.
-  - **Middle Pane (Code Viewer)**: Highlights file code text. Triggers `Prism.highlightAll()` on active file updates, providing context-aware syntax highlighting.
-  - **Right Pane (Control Desk)**: Holds tabs for triggering audits (Security, Performance, Quality), chatting with the codebase, and scanning for Technical Debt or Architecture layouts.
-- **Review History (`src/app/reviews/page.tsx`)**: Table interface for finding and searching past reviews across all projects, featuring a detail view slider panel to display summaries and recommendations.
+A breakdown of the technical decisions, data layouts, and execution flow of the AI Code Review Assistant.
 
 ---
 
-## 2. Backend Architecture
+## 1. Frontend Design
 
-The backend is built using **NestJS (TypeScript)** following a modular MVC architecture:
+The UI is a React client built on Next.js 15 (App Router) using Tailwind CSS for a minimal, dark theme.
 
-### Directory Module Layout
-```
+### Key Client Files
+- `src/context/AuthContext.tsx`: Manages user sessions, stores JWT tokens in localStorage, and blocks unauthenticated users from accessing protected workspace pages.
+- `src/lib/api.ts`: A custom `fetch` wrapper. It automatically injects the current JWT into headers and converts backend JSON error messages into standard catchable JavaScript exceptions.
+- `src/app/projects/[id]/page.tsx` (Workspace): A unified 3-pane layout containing:
+  - **Left Pane (File Tree)**: Custom recursive component rendering folders first, then sorted files alphabetically.
+  - **Middle Pane (Code Viewer)**: Code explorer loading the contents of selected files with PrismJS highlighting.
+  - **Right Pane (Control Desk)**: Tabs for reviews (Security, Performance, Quality), chatbot, and scanning utilities.
+
+---
+
+## 2. Backend Design
+
+The server is built with NestJS to enforce structural separation of concerns via modules.
+
+### Code Directory Structure
+```text
 backend/src/
-├── app.module.ts       # Roots all submodules
-├── main.ts             # Bootstraps CORS, global filters, and ValidationPipe
-├── auth/               # Passport local strategy, JWT signing, password hashing
-├── projects/           # REST controller and services for workspaces CRUD
-├── files/              # Multipart uploads, ZIP parsing, tree assembly
-├── ai/                 # Axios client, preset helper testing, dynamic LLM integrations
-└── reviews/            # Prompt constructors, JSON parsing wrappers, audit records
+├── app.module.ts       # Root module declaring imports for all sub-features
+├── main.ts             # Server boots, binds CORS, and sets global ValidationPipe
+├── auth/               # Passport authentication strategies, JWT signing, password hashes
+├── projects/           # REST endpoints for CRUD operations on workspaces
+├── files/              # Zip buffer parser, file validation, tree generation
+├── ai/                 # Axios clients and dynamic API request handlers for LLMs
+└── reviews/            # Prompt templates, output cleaning helpers, database writes
 ```
 
 ### Module Responsibilities
-1. **AuthModule**: Exposes local authentication routes. Returns a signed JWT token on login or registration, guarded by a global `JwtStrategy` and `JwtAuthGuard`.
-2. **ProjectsModule**: Implements standard project CRUD endpoints. Ensures resource scopes are validated against user IDs.
-3. **FilesModule**: Integrates `adm-zip` to extract ZIP buffers in-memory. Filters out binaries and unneeded folders (like `.git` and `node_modules`), then pushes text files to the database. Exposes tree hierarchies and preview content.
-4. **AIModule**: Provides a dynamic API calling utility. Queries the database for user-configured credentials (Base URL, API Key, Model Name) and maps chat completions to the corresponding provider dynamically.
-5. **ReviewModule**: Builds detailed prompts mapping to audit templates. Enforces structured JSON output parsing, cleaning up LLM markdown block tags, and registering reviews in Postgres.
-6. **ChatModule**: Gathers project code text (with size limits) and recent conversation logs, sending the assembled context in a single prompt to the LLM.
+- **AuthModule**: Handles password hashing via `bcrypt` and outputs signed JWT tokens.
+- **FilesModule**: Uses `adm-zip` to extract file packages in-memory. Filters out binaries and build artifacts (like `node_modules` and `.git`), then batch-creates file records in the database.
+- **AIModule**: Queries the user's custom settings from the database (Base URL, API Key, Model Name) to build adaptive Axios requests, ensuring compatibility with local LLMs (like LM Studio or Ollama) that do not require Authorization headers.
+- **ReviewModule**: Builds structured prompt contexts and handles formatting fallback logic if the LLM output is wrapped in markdown code blocks.
 
 ---
 
-## 3. Database Design
+## 3. Database Schema
 
-We use **PostgreSQL** configured via **Prisma ORM**. All IDs are structured as Universally Unique Identifiers (UUIDs) for distributed security.
+The database uses PostgreSQL (accessed via Prisma ORM). The relationship model is mapped below:
 
 ```mermaid
 erDiagram
@@ -117,30 +114,28 @@ erDiagram
 
 ---
 
-## 4. AI Integration Flow
+## 4. Execution Flows & Prompts
 
-The application interfaces with OpenAI-compatible endpoints on the fly. 
-
+### Review Execution
 ```mermaid
 sequenceDiagram
-    participant User as User Browser
-    participant API as NestJS Backend
-    participant DB as PostgreSQL Database
-    participant LLM as Dynamic AI Provider (OpenAI/LM Studio)
+    participant UI as Next.js UI
+    participant Server as NestJS API
+    participant DB as SQLite / Postgres
+    participant LLM as AI API (Groq/Ollama/OpenAI)
 
-    User->>API: POST /reviews/trigger (with template type)
-    API->>DB: Fetch active AIProvider credentials
-    DB-->>API: Return Base URL, API Key, Model Name
-    API->>DB: Fetch code files in project
-    DB-->>API: Return raw file paths and contents
-    API->>API: Compile prompts & append code files context
-    API->>LLM: POST {baseUrl}/chat/completions (JSON Mode = true)
-    LLM-->>API: Return structured JSON audit findings
-    API->>API: Parse & sanitize JSON output
-    API->>DB: Write Review record (summary, issues, files)
-    API-->>User: Return completed Review details
+    UI->>Server: POST /reviews/trigger (Scope & Template)
+    Server->>DB: Read active AIProvider and project code files
+    DB-->>Server: Return API Keys, Model Name, and raw file texts
+    Server->>Server: Assemble prompt (Token checks & truncation)
+    Server->>LLM: POST chat/completions (Request JSON Mode)
+    LLM-->>Server: Return JSON audit details
+    Server->>Server: Parse & sanitize JSON formatting
+    Server->>DB: Save Review history record
+    Server-->>UI: Return completed findings JSON
 ```
 
-### Prompt Engineering Strategies
-- **JSON Format Enforcements**: The system prompt instructs the AI to return *only* a valid JSON object matching a strict template schema. A fallback parsing routine cleans up markdown backticks (e.g. ````json ... ````) and normalizes missing keys.
-- **Context Size Safeguard**: Prior to sending code files to the LLM, character counts are verified. If the context exceeds limits (~250,000 characters), file assembly is truncated gracefully with a notice, preventing token overflow exceptions.
+### Context Size Safeguards
+To prevent API limits from triggering HTTP 400 errors, the backend estimates the payload size in characters before sending requests:
+- **Review Scans**: Triggers a validation error if the project context size exceeds 350,000 characters.
+- **RAG Chat sessions**: Sequentially appends files to the prompt budget and stops before exceeding 250,000 characters, appending a notice to the model that some files were omitted.
