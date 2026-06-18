@@ -101,7 +101,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#090d16]">
+    <div className="flex min-h-screen bg-black">
       <Sidebar />
 
       <main className="flex-1 flex flex-col p-8 overflow-y-auto max-h-screen">
@@ -114,7 +114,7 @@ export default function DashboardPage() {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs transition-all hover-glow shadow-md shadow-indigo-500/10 cursor-pointer"
+            className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs transition-all hover-glow shadow-md shadow-emerald-500/10 cursor-pointer"
           >
             <FolderPlus className="h-4 w-4" />
             <span>New Project</span>
@@ -131,12 +131,12 @@ export default function DashboardPage() {
         {/* Loading Spinner */}
         {loading ? (
           <div className="flex-1 flex justify-center items-center">
-            <div className="h-8 w-8 border-2 border-white/20 border-t-indigo-500 rounded-full animate-spin" />
+            <div className="h-8 w-8 border-2 border-white/20 border-t-emerald-500 rounded-full animate-spin" />
           </div>
         ) : projects.length === 0 ? (
           /* Empty State */
-          <div className="flex-1 flex flex-col justify-center items-center border border-dashed border-white/5 rounded-3xl p-12 text-center bg-[#0d1321]/20 animate-fade-in">
-            <div className="p-4 rounded-2xl bg-indigo-500/5 border border-indigo-500/10 text-indigo-400/70 mb-4">
+          <div className="flex-grow flex flex-col justify-center items-center border border-dashed border-white/5 rounded-3xl p-12 text-center bg-neutral-950/20 animate-fade-in">
+            <div className="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 text-emerald-400/70 mb-4">
               <FolderOpen className="h-8 w-8" />
             </div>
             <h3 className="text-lg font-semibold text-white">No projects found</h3>
@@ -145,7 +145,7 @@ export default function DashboardPage() {
             </p>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs transition-all hover-glow cursor-pointer"
+              className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs transition-all hover-glow cursor-pointer"
             >
               <FolderPlus className="h-4 w-4" />
               <span>Create First Project</span>
@@ -157,7 +157,7 @@ export default function DashboardPage() {
             {projects.map((project) => (
               <div key={project.id} className="glass-panel p-6 rounded-2xl flex flex-col relative group">
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-base font-bold text-white group-hover:text-indigo-400 transition-colors truncate pr-4">
+                  <h3 className="text-base font-bold text-white group-hover:text-emerald-400 transition-colors truncate pr-4">
                     {project.name}
                   </h3>
                   
@@ -225,7 +225,7 @@ export default function DashboardPage() {
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
             <div className="glass-panel w-full max-w-md p-8 rounded-3xl relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
               
               <h2 className="text-xl font-bold text-white mb-2">Create Project</h2>
               <p className="text-xs text-gray-400 mb-6">Group your target files under a new workspace</p>
@@ -275,7 +275,7 @@ export default function DashboardPage() {
                   <button
                     type="submit"
                     disabled={createLoading}
-                    className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs transition-all hover-glow disabled:opacity-50 cursor-pointer"
+                    className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs transition-all hover-glow disabled:opacity-50 cursor-pointer"
                   >
                     {createLoading ? (
                       <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
